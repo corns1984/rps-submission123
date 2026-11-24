@@ -1,0 +1,190 @@
+{
+  "metadata": {
+    "account_id": 9823411,
+    "account_name": "E-Commerce Cloud Production",
+    "time_window": "SINCE 7 days ago UNTIL now",
+    "total_transactions_recorded": 542000,
+    "monitored_apps": [
+      "order-service-prod",
+      "payment-gateway-prod",
+      "catalog-service-prod"
+    ]
+  },
+  "transactions": [
+    {
+      "transaction_id": "tx-1001",
+      "appName": "order-service-prod",
+      "name": "WebTransaction/SpringController/checkout",
+      "duration_seconds": 4.82,
+      "databaseDuration_seconds": 4.15,
+      "externalDuration_seconds": 0.42,
+      "httpResponseCode": 200,
+      "error": false,
+      "timestamp": "2026-11-10T14:22:15Z",
+      "database_statement": "SELECT * FROM orders WHERE customer_id = ? FOR UPDATE",
+      "host": "k8s-worker-prod-04"
+    },
+    {
+      "transaction_id": "tx-1002",
+      "appName": "order-service-prod",
+      "name": "WebTransaction/SpringController/checkout",
+      "duration_seconds": 5.12,
+      "databaseDuration_seconds": 4.6,
+      "externalDuration_seconds": 0.35,
+      "httpResponseCode": 504,
+      "error": true,
+      "errorMessage": "Lock wait timeout exceeded; try restarting transaction",
+      "timestamp": "2026-11-10T14:23:40Z",
+      "database_statement": "SELECT * FROM orders WHERE customer_id = ? FOR UPDATE",
+      "host": "k8s-worker-prod-02"
+    },
+    {
+      "transaction_id": "tx-1003",
+      "appName": "payment-gateway-prod",
+      "name": "WebTransaction/Express/chargeCard",
+      "duration_seconds": 3.45,
+      "databaseDuration_seconds": 0.22,
+      "externalDuration_seconds": 3.1,
+      "httpResponseCode": 200,
+      "error": false,
+      "timestamp": "2026-11-10T14:25:01Z",
+      "external_call": "POST https://api.stripe.com/v1/charges",
+      "host": "k8s-worker-prod-08"
+    },
+    {
+      "transaction_id": "tx-1004",
+      "appName": "payment-gateway-prod",
+      "name": "WebTransaction/Express/chargeCard",
+      "duration_seconds": 6.89,
+      "databaseDuration_seconds": 0.18,
+      "externalDuration_seconds": 6.55,
+      "httpResponseCode": 500,
+      "error": true,
+      "errorMessage": "GatewayTimeoutException: Payment upstream provider unresponsive",
+      "timestamp": "2026-11-10T14:26:30Z",
+      "external_call": "POST https://api.stripe.com/v1/charges",
+      "host": "k8s-worker-prod-08"
+    },
+    {
+      "transaction_id": "tx-1005",
+      "appName": "catalog-service-prod",
+      "name": "WebTransaction/FastAPI/searchInventory",
+      "duration_seconds": 2.95,
+      "databaseDuration_seconds": 2.7,
+      "externalDuration_seconds": 0.12,
+      "httpResponseCode": 200,
+      "error": false,
+      "timestamp": "2026-11-10T14:28:10Z",
+      "database_statement": "SELECT * FROM inventory WHERE title LIKE '%shoes%' AND stock > 0",
+      "host": "k8s-worker-prod-01"
+    },
+    {
+      "transaction_id": "tx-1006",
+      "appName": "order-service-prod",
+      "name": "WebTransaction/SpringController/getOrderHistory",
+      "duration_seconds": 1.85,
+      "databaseDuration_seconds": 1.72,
+      "externalDuration_seconds": 0.05,
+      "httpResponseCode": 200,
+      "error": false,
+      "timestamp": "2026-11-10T14:30:00Z",
+      "database_statement": "SELECT * FROM order_history JOIN items ON order_history.id = items.order_id WHERE user_id = ?",
+      "host": "k8s-worker-prod-03"
+    },
+    {
+      "transaction_id": "tx-1007",
+      "appName": "catalog-service-prod",
+      "name": "WebTransaction/FastAPI/getProductDetails",
+      "duration_seconds": 0.15,
+      "databaseDuration_seconds": 0.08,
+      "externalDuration_seconds": 0.02,
+      "httpResponseCode": 200,
+      "error": false,
+      "timestamp": "2026-11-10T14:31:12Z",
+      "database_statement": "SELECT * FROM products WHERE sku = ?",
+      "host": "k8s-worker-prod-01"
+    },
+    {
+      "transaction_id": "tx-1008",
+      "appName": "catalog-service-prod",
+      "name": "WebTransaction/FastAPI/searchInventory",
+      "duration_seconds": 3.8,
+      "databaseDuration_seconds": 3.55,
+      "externalDuration_seconds": 0.15,
+      "httpResponseCode": 500,
+      "error": true,
+      "errorMessage": "QueryExecutionTimeout: Full table scan exceeded 3000ms threshold",
+      "timestamp": "2026-11-10T14:32:45Z",
+      "database_statement": "SELECT * FROM inventory WHERE title LIKE '%boots%' AND stock > 0",
+      "host": "k8s-worker-prod-02"
+    },
+    {
+      "transaction_id": "tx-1009",
+      "appName": "order-service-prod",
+      "name": "WebTransaction/SpringController/reserveInventory",
+      "duration_seconds": 2.45,
+      "databaseDuration_seconds": 2.1,
+      "externalDuration_seconds": 0.2,
+      "httpResponseCode": 200,
+      "error": false,
+      "timestamp": "2026-11-10T14:35:20Z",
+      "database_statement": "UPDATE inventory SET reserved = reserved + ? WHERE sku = ?",
+      "host": "k8s-worker-prod-04"
+    },
+    {
+      "transaction_id": "tx-1010",
+      "appName": "payment-gateway-prod",
+      "name": "WebTransaction/Express/refundTransaction",
+      "duration_seconds": 2.15,
+      "databaseDuration_seconds": 0.15,
+      "externalDuration_seconds": 1.95,
+      "httpResponseCode": 200,
+      "error": false,
+      "timestamp": "2026-11-10T14:36:50Z",
+      "external_call": "POST https://api.stripe.com/v1/refunds",
+      "host": "k8s-worker-prod-07"
+    }
+  ],
+  "aggregated_metrics": {
+    "percentiles": {
+      "WebTransaction/SpringController/checkout": {
+        "p50": 0.85,
+        "p90": 3.2,
+        "p95": 4.82,
+        "p99": 5.12
+      },
+      "WebTransaction/Express/chargeCard": {
+        "p50": 0.65,
+        "p90": 2.5,
+        "p95": 3.45,
+        "p99": 6.89
+      },
+      "WebTransaction/FastAPI/searchInventory": {
+        "p50": 0.35,
+        "p90": 1.95,
+        "p95": 2.95,
+        "p99": 3.8
+      },
+      "WebTransaction/SpringController/getOrderHistory": {
+        "p50": 0.22,
+        "p90": 0.95,
+        "p95": 1.45,
+        "p99": 1.85
+      },
+      "WebTransaction/FastAPI/getProductDetails": {
+        "p50": 0.05,
+        "p90": 0.1,
+        "p95": 0.12,
+        "p99": 0.15
+      }
+    },
+    "error_rates_percentage": {
+      "order-service-prod": 3.85,
+      "payment-gateway-prod": 4.5,
+      "catalog-service-prod": 2.1
+    }
+  },
+  "question_code": "RTEL_Q10_E",
+  "problem_code": "rtel_newrelic_nrql_basics",
+  "exam_code": "p1d11"
+}
